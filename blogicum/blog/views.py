@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
 
-
 posts: list[dict[str, int|str]] = [
     {
         'id': 0,
