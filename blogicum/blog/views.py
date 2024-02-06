@@ -54,10 +54,10 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = [post for post in posts if post['id'] == post_id]
+    post = {post_id: post for post in posts if post['id'] == post_id}
     if not post:
         raise Http404('Вы указали неверный id')
-    context = {'post': post[0]}
+    context = {'post': post[post_id]}
     return render(request, template, context)
 
 
