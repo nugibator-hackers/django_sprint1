@@ -45,6 +45,8 @@ posts: list[dict] = [
     },
 ]
 
+all_posts = {post['id']: post for post in posts}
+
 
 def index(request):
     template = 'blog/index.html'
@@ -54,10 +56,9 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = {post_id: post for post in posts if post['id'] == post_id}
-    if not post:
+    if post_id not in all_posts:
         raise Http404('Вы указали неверный id')
-    context = {'post': post[post_id]}
+    context = {'post': all_posts[post_id]}
     return render(request, template, context)
 
 
