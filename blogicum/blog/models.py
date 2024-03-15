@@ -12,7 +12,8 @@ class Post(PublishedModel):
     pub_date = models.DateTimeField(
         'Дата и время публикации',
         help_text=(
-            'Если установить дату и время в будущем — можно делать отложенные публикации.'
+            'Если установить дату и время в будущем — '
+            'можно делать отложенные публикации.'
         ),
     )
     author = models.ForeignKey(
@@ -44,6 +45,7 @@ class Post(PublishedModel):
     def __str__(self):
         return self.title
 
+
 class Category(PublishedModel):
     title = models.CharField('Заголовок', max_length=256)
     description = models.TextField('Описание')
@@ -51,16 +53,19 @@ class Category(PublishedModel):
         'Идентификатор',
         unique=True,
         help_text=(
-            'Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.'
+            'Идентификатор страницы для URL; разрешены символы латиницы, '
+            'цифры, дефис и подчёркивание.'
         ),
     )
+
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
     def __str__(self):
         return self.title
-    
+
+
 class Location(PublishedModel):
     name = models.CharField('Название места', max_length=256)
 
@@ -69,4 +74,4 @@ class Location(PublishedModel):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name    
+        return self.name
