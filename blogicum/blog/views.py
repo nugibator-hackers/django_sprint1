@@ -3,6 +3,8 @@ from django.utils import timezone
 
 from blog.models import Post, Category
 
+SLICE_POSTS = 5
+
 
 def get_posts():
     return Post.objects.select_related().filter(
@@ -14,10 +16,7 @@ def get_posts():
 
 def index(request):
     template = "blog/index.html"
-    post_list = (
-        get_posts()
-        .order_by("-pub_date")[:5]
-    )
+    post_list = get_posts()[:SLICE_POSTS]
     context = {"post_list": post_list}
     return render(request, template, context)
 
