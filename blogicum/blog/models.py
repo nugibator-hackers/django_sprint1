@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from core.models import PublishedModel
 
@@ -36,6 +37,11 @@ class Post(PublishedModel):
         verbose_name='Категория',
         related_name='posts',
         null=True,
+    )
+    image = models.ImageField(
+        'Фото',
+        upload_to=settings.POST_IMAGE_DIR,
+        blank=True,
     )
 
     class Meta:
@@ -76,3 +82,25 @@ class Location(PublishedModel):
 
     def __str__(self):
         return self.name
+    
+class Comment(PublishedModel):
+    text = models.TextField('Текст комментария')
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+
+    class Meta:
+        ordering = ('created_at',)
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return self.text
